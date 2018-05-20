@@ -1,0 +1,13 @@
+#bb{
+	  padding-top:15px;
+	  }
+      #cc1{
+		  color:#FFF;
+		  }
+          #cc2{
+		  color:#FFF;
+		  }
+       #weixin{
+		   border:0px;
+		   background:#FFF;
+		   padding:0px}  

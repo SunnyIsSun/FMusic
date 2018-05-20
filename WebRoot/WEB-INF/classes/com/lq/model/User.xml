@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userMapper">
+	<!-- 注册用户信息 -->
+	<insert id="register" parameterType="User" > 
+		<![CDATA[
+			insert into user(username,email,password) value(#{username},#{email},#{password});
+		]]>
+	</insert>
+	
+	<!-- 注册用户异步校验 -->
+	<select id="AjaxRegister" parameterType="string" resultType="User"> 
+		<![CDATA[
+			select email from user where email=#{email};
+		]]>
+	</select>
+	<!-- 登录1和切换用户 -->
+	<select id="loginValidate" parameterType="User" resultType="User">	
+		<![CDATA[
+			select * from user where email=#{email} and password=#{password}
+		]]>
+	</select>
+	<!-- 登录2 -->
+	<select id="loginValidate2" resultType="User" parameterType="String" >	
+		<![CDATA[
+			select email from user where email like '%${value}%'
+		]]>
+	</select>
+	<!-- 找回密码 -->
+	<select id="findPassword" parameterType="string" resultType="string">
+		<![CDATA[
+			select password from user where email=#{email}
+		]]>
+	</select>
+	<!-- 上传头像 -->
+	<update id="updatePicture" parameterType="User">
+		<![CDATA[
+			update user set picture=#{picture} where email=#{email}
+		]]>
+	</update>
+	
+</mapper>

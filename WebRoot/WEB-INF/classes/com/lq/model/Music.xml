@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lq.model.musicMapper">
+	<select id="musicType" resultType="type">
+		select * from m_sortn
+	</select>
+	<select id="showMusic" resultType="Music">
+		select * from m_list limit 12
+	</select>
+	<select id="showMusic1" resultType="Music">
+		select * from m_list limit 8
+	</select>
+	<select id="playList" resultType="Music">
+		select m_list.* from (select * from play_list ORDER BY number desc)play_list,m_list where play_list.id=m_list.m_id
+	</select>
+	<select id="showMusicByType" resultType="Music">
+		select * from m_list,m_sortn where m_list.m_sort=m_sortn.m_type and m_sortn.m_type=#{m_type}
+	</select>
+	<select id="storeList" resultType="Music" parameterType="int" >
+		select m_list.* from (select * from store_list  where uid=#{uid} ORDER BY number desc)
+store_list,m_list where store_list.id=m_list.m_id
+	</select>
+	<!--查询所有歌曲的总数  -->
+	<select id="showPage" resultType="int" >
+		select count(*) from m_list where m_type=1
+	</select>
+	<!-- 查询各分类歌曲的总数 -->
+	<select id="showPageByType" parameterType="PageBean" resultType="int" >
+		select count(*) from m_list where m_type=1 group by m_sort having m_sort=#{m_sort}
+	</select>
+	<!-- //查询所有歌曲展示分页 -->
+	<select id="showMusicByPage" resultType="Music" parameterType="PageBean">
+		select * from m_list where m_type=1 limit #{index},12
+	</select>
+	<!--查询各分类歌曲展示分页  -->
+	<select id="byType" resultType="Music" parameterType="PageBean">
+		select * from m_list  where m_sort=#{m_sort} and m_type=1 limit #{index},12
+	</select>
+	<select id="playlistcount" resultType="int">
+		select count(*) from play_list 
+	</select>
+	<delete id="deleteList">
+		delete from play_list where number=(select a.number from (
+(select max(number)  number from play_list where id=#{id}) )a)
+	</delete>
+	<delete id="deleteStoreList">
+		delete from store_list where number=(select a.number from (
+(select max(number)  number from store_list where id=#{id}) )a)
+	</delete>
+	<insert id="addtolist" parameterType="AddMusic">
+		insert into store_list(uid,id) values(#{uid},#{id})
+	</insert>
+	<insert id="playsing" >
+		insert into play_list(id) values(#{id})
+	</insert>
+	<insert id="upload" parameterType="Music">
+		insert into m_list(m_name,m_singer,m_fileUrl,m_type,m_images,m_sort,m_desc,m_count) values(#{m_name},#{m_singer},#{m_fileUrl},#{m_type},#{m_images},#{m_sort},#{m_desc},#{m_count})
+	</insert>
+	<!-- 根据歌手展示歌曲 -->
+	<select id="singerInfo" resultType="Music" parameterType="string">
+		select * from m_list where m_type=1 and m_singer=#{singer}
+	</select>
+</mapper>

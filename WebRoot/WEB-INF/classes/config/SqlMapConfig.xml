@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>	
+  <!-- 类别名定义 -->  
+   <typeAliases>  
+         <typeAlias type="com.lq.model.User" alias="User"/>
+         
+         <typeAlias type="com.lq.model.AddMusic" alias="AddMusic"/>  
+         <typeAlias type="com.lq.model.MusicType" alias="type"/>   
+         <typeAlias type="com.lq.model.Music" alias="Music"/>
+         <typeAlias type="com.lq.model.BeanPage" alias="BeanPage"/>
+         <typeAlias type="com.lq.model.VideoList" alias="VideoList"/>
+         <typeAlias type="com.lq.model.PageBean" alias="PageBean"/>
+          <typeAlias type="com.lq.model.Comment" alias="Comment"/>
+   </typeAliases>
+   <mappers>
+   		<mapper resource="com/lq/model/User.xml"/>
+   		<mapper resource="com/lq/model/Music.xml"/>
+   		<mapper resource="com/lq/model/VideoList.xml"/>
+   </mappers>    
+</configuration>
